@@ -32,8 +32,8 @@ export const sendMoneyToVendor = async(req, res) => {
     const foundSender = await User.findById(sender)
 
     const transaction = new Transaction({
-        from : foundSender,
-        to : creditVendor,
+        from : foundSender.name,
+        to : creditVendor.name,
         amount : money
     })
 

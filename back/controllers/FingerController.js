@@ -67,7 +67,7 @@ export const FindUserByFinger = async(req, res) => {
         
     }
 
-    return res.json({success : false, message : "Fingerprint didnt match any user, you should probably sign in"})
+    return res.json({success : false, message : "Fingerprint didnt match any user, you should probably sign up"})
 
 }
 

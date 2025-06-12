@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { io } from "socket.io-client";
 import { toast } from "react-toastify";
+import { CreditCard, Receipt, UserPlus, LogIn } from "lucide-react";
 
 const socket = io("http://localhost:3000")
 
@@ -11,10 +13,19 @@ export default function Payments() {
   const [allVendors, setAllVendors] = useState([]);
   const [money, setMoney] = useState("0");
   const [vendor, setVendor] = useState("");
+  const [activeNav, setActiveNav] = useState("dashboard");
 
   const incrementAmount = 30;
+  const nav = useNavigate()
 
-  // Animation variants
+  const navItems = [
+    { id: 'payments', label: 'Payments', icon: CreditCard , path: "/payments"},
+    { id: 'transactions', label: 'Transactions', icon: Receipt , path : "/transactions"},
+    { id: 'Signup', label: 'Signup', icon: UserPlus , path : "/signup"},
+    { id: 'Login', label: 'Login', icon: LogIn, path : "/login"},
+
+  ];
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -46,6 +57,15 @@ export default function Payments() {
     },
   };
 
+  const navVariants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.4, ease: "easeOut" },
+    },
+  };
+
   useEffect(() => {
 
     fetch("http://localhost:3000/getUsers")
@@ -61,8 +81,6 @@ export default function Payments() {
       })
       .catch((err) => console.log(err));
 
-
-
     socket.on("userMoneyChange", ({balance, id}) => {
         setAllUsers(prevUsers => {
             return prevUsers.map(user => ( id == user._id ? {...user, balance} : user ))
@@ -75,12 +93,9 @@ export default function Payments() {
         })
     })
 
-
   }, []);
 
-
   function addMoney(user) {
-
      fetch("http://localhost:3000/addMoney", {
             method : "PATCH",
             headers : {
@@ -94,10 +109,7 @@ export default function Payments() {
             socket.emit("userMoneyChange", {id : user._id})
         })
         .catch(err => console.log(err))
-
-
   }
-
 
   async function handlePayment() {
     const scanResponse = await fetch("http://localhost:3000/scanFinger");
@@ -113,7 +125,6 @@ export default function Payments() {
     });
 
     const matchResult = await matchResponse.json();
-    // console.log(matchResponse)
     toast.success(matchResult.message)
 
     if (matchResult.user) {
@@ -157,8 +168,6 @@ export default function Payments() {
         })
         .catch((err) => console.log(err));
     }
-    
-
   }
 
   const displayUsers = allUsers.map((user, index) => (
@@ -169,7 +178,6 @@ export default function Payments() {
       whileTap={{ scale: 0.98 }}
       className="bg-white min-w-[160px] max-w-[180px] min-h-[160px] border-2 border-orange-300 rounded-xl shadow-lg shadow-orange-100 p-3 flex flex-col justify-between"
     >
-
       <div className="text-center space-y-2">
         <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full flex items-center justify-center mx-auto shadow-md">
           <span className="text-white font-bold text-xs">{user.name?.charAt(0) || "U"}</span>
@@ -198,7 +206,7 @@ export default function Payments() {
       variants={cardVariants}
       whileHover={{ scale: 1.02, rotateY: 5 }}
       whileTap={{ scale: 0.98 }}
-      className={`bg-white mb-3 rounded-xl shadow-lg p-3 transition-all duration-300 hover:shadow-xl ${
+      className={`bg-white mb-3 w-[20%] rounded-xl shadow-lg p-3 transition-all duration-300 hover:shadow-xl ${
         vendor?.name === vendorItem.name ? "ring-2 ring-orange-300 shadow-orange-200" : "shadow-gray-100"
       }`}
     >
@@ -230,17 +238,88 @@ export default function Payments() {
 
   return (
     <motion.div
-      className="h-screen w-screen bg-gradient-to-br from-orange-50 to-yellow-50 p-4 overflow-hidden font-sora"
+      className="h-screen w-screen bg-gradient-to-br from-orange-50 to-yellow-50 font-sora overflow-x-hidden"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
     >
-      <div className="h-full max-w-7xl mx-auto flex flex-col">
-        {/* Header */}
-        <motion.div className="text-center mb-4" variants={itemVariants}>
-          <h1 className="text-3xl font-bold text-gray-800 font-sora">FingerPay Prototype</h1>
-        </motion.div>
+      {/* Navigation Bar */}
+      <motion.nav
+        className="bg-white/80 backdrop-blur-lg border-b border-orange-100 shadow-sm sticky top-0 z-50"
+        variants={navVariants}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            {/* Logo/Title */}
+            <motion.div 
+              className="flex items-center space-x-3"
+              whileHover={{ scale: 1.02 }}
+            >
+              <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center shadow-lg">
+                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4" />
+                </svg>
+              </div>
+              <div>
+                <h1 className="text-xl font-bold text-gray-800">FingerPay</h1>
+                <p className="text-xs text-gray-500">Biometric Payments</p>
+              </div>
+            </motion.div>
 
+            {/* Navigation Items - Moved to the right */}
+            <div className="hidden md:flex items-center space-x-1">
+              {navItems.map((item) => {
+                const IconComponent = item.icon;
+                return (
+                  <motion.button
+                    key={item.id}
+                    onClick={() => {setActiveNav(item.id); nav(item.path)}}
+                    className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center space-x-2 ${
+                      activeNav === item.id
+                        ? "bg-orange-100 text-orange-700 shadow-sm"
+                        : "text-gray-600 hover:text-orange-600 hover:bg-orange-50"
+                    }`}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <IconComponent size={16} />
+                    <span>{item.label}</span>
+                  </motion.button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Navigation */}
+        <div className="md:hidden border-t border-orange-100 bg-white/90 backdrop-blur-lg">
+          <div className="px-4 py-2">
+            <div className="flex justify-around">
+              {navItems.map((item) => {
+                const IconComponent = item.icon;
+                return (
+                  <motion.button
+                    key={item.id}
+                    onClick={() => setActiveNav(item.id)}
+                    className={`px-3 py-2 rounded-lg font-medium text-xs transition-all duration-200 flex flex-col items-center space-y-1 ${
+                      activeNav === item.id
+                        ? "bg-orange-100 text-orange-700"
+                        : "text-gray-600 hover:text-orange-600"
+                    }`}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <IconComponent size={18} />
+                    <span>{item.label}</span>
+                  </motion.button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </motion.nav>
+
+      {/* Main Content */}
+      <div className="h-full max-w-7xl mx-auto flex flex-col p-4 pt-2">
         <div className="flex-1 grid lg:grid-cols-3 gap-4">
           {/* Left Section - Vendors and Users */}
           <div className="lg:col-span-2 flex flex-col gap-4">
@@ -250,7 +329,7 @@ export default function Payments() {
               variants={itemVariants}
             >
               <div className="flex items-center mb-3 flex-shrink-0">
-                <div className="w-2 h-6 bg-gradient-to-b from-amber-400 to-orange-500 rounded-full mr-3"></div>
+                <div className="w-2 h-6 bg-gradient-to-b from-amber-400 to-orange-500 rounded-full mr-2"></div>
                 <h2 className="text-base md:text-lg font-bold text-gray-800 font-sora">Vendors</h2>
                 <div className="ml-auto bg-yellow-100 px-2 py-1 rounded-full">
                   <span className="text-orange-600 font-semibold text-xs">{allVendors.length} Active</span>
@@ -258,7 +337,7 @@ export default function Payments() {
               </div>
               <div className="flex-1 min-h-0">
                 <motion.div
-                  className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3"
+                  className="flex items-center justify-start gap-4 h-full ml-2"
                   variants={containerVariants}
                 >
                   {displayVendors}
@@ -285,7 +364,6 @@ export default function Payments() {
                 >
                 {displayUsers}
                 </motion.div>
-
               </div>
             </motion.div>
           </div>

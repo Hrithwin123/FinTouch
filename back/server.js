@@ -9,6 +9,7 @@ import FingerRouter from "./routers/FingerRouter.js"
 import AuthRouter from "./routers/AuthRouter.js"
 import UserRouter from "./routers/UserRouter.js"
 import VendorRouter from "./routers/VendorRouter.js"
+import TransactionRouter from "./routers/TransactionRouter.js"
 
 import User from "./models/UserSchema.js"
 import Vendor from "./models/VendorSchema.js"
@@ -50,6 +51,7 @@ app.use("/", FingerRouter)
 app.use("/", AuthRouter)
 app.use("/", UserRouter)
 app.use("/", VendorRouter)
+app.use("/", TransactionRouter)
 
 
 server.listen(3000, () => console.log("app is listening on port 3000"))
