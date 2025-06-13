@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react"
 import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 
 export default function Signup(){
     const [name, setName] = useState("")
@@ -34,7 +35,7 @@ export default function Signup(){
             body : JSON.stringify({name, password, template})
         })
         const data = await response.json()
-        console.log(data)
+        toast.success(data.message)
         if(data.url){
             nav(data.url)
         }

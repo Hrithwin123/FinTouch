@@ -7,6 +7,13 @@ export const Signup = async(req, res) => {
 
     const {name, password, template} = req.body;
 
+    // const existsUser = await User.find({name});
+
+    // if(existsUser){
+    //     return res.json({success : false, message : "This username is already taken"})
+    // }
+
+
     if(!name || !password){
         return res.json({success : false, message : "Signup failed"})
 

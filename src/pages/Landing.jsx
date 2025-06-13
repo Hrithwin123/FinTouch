@@ -101,7 +101,7 @@ const Landing = () => {
             variants={fadeInUp}
           >
             Secure, instant payments powered by fingerprint authentication. 
-            Initiate UPI transactions from your fingertips.
+            UPI transactions at the tip of your fingers.
           </motion.p>
           
           <motion.div 
@@ -109,6 +109,7 @@ const Landing = () => {
             variants={fadeInUp}
           >
             <motion.button 
+              onClick={() => nav("/payments")}
               className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:shadow-lg transition-shadow flex items-center gap-2"
               whileHover={{ scale: 1.05, boxShadow: "0 10px 30px rgba(255, 87, 34, 0.3)" }}
               whileTap={{ scale: 0.95 }}
@@ -216,9 +217,10 @@ const Landing = () => {
               <div className="space-y-4">
                 {[
                   "Biometric authentication",
-                  "SHA-256: Data Protection Standard",
+                  "SHA-256 and Blowfish encryption",
                   "Web Socket Integration",
-                  "Digital Signatures via JWT"
+                  "Digital Signatures via JWT",
+                  "Database with encrypted storage"
                 ].map((item, index) => (
                   <motion.div 
                     key={index}

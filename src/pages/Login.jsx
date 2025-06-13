@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react"
 import { useNavigate } from "react-router-dom"
-
+import { toast } from "react-toastify";
 
 export default function Login(){
 
@@ -13,7 +13,7 @@ export default function Login(){
     
         async function submit(){
     
-            const response = await fetch("http://localhost:3000/Login", {
+            const response = await fetch("http://localhost:3000/login", {
                 method : "POST",
                 headers : {
                     "Content-Type" : "application/json"
@@ -21,7 +21,8 @@ export default function Login(){
                 body : JSON.stringify({name, password})
             })
             const data = await response.json()
-            console.log(data)
+            console.log(data.message)
+            toast.success(data.message)
             if(data.url){
                 nav(data.url)
             }
