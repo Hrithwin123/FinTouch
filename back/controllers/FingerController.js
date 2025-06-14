@@ -2,7 +2,7 @@ import fetch from "node-fetch"
 import mongoose from "mongoose"
 import User from "../models/UserSchema.js"
 import https from "https"
-
+import bcrypt from "bcryptjs"
 
 export const ScanFingerController = (req, res) => {
 
@@ -41,7 +41,6 @@ export const FindUserByFinger = async(req, res) => {
 
     const {template} = req.body;
 
-
     const url = "https://localhost:8000/SGIMatchScore"
     
     const users = await User.find();
@@ -71,3 +70,21 @@ export const FindUserByFinger = async(req, res) => {
 
 }
 
+export const updateFingerprint = async(req, res) => {
+
+    const {template, id} = req.body;
+
+    const user = await User.findById(id)
+
+    if(!user){
+        return res.json({success : false, message : "Authentication not done can you login again ?"})
+    }
+
+    user.template = template
+
+    await user.save()
+
+    return res.json({success : true, message : "FingerPrint Updated successfully"})
+    
+
+}

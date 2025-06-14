@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import VendorLogin from "./pages/VendorLogin";
 import Landing from "./pages/Landing"
 import Transaction from "./pages/Transactions";
+import DoneLogin from "./pages/DoneLogin";
 
 export default function App(){
 
@@ -33,6 +34,7 @@ export default function App(){
         <Route path="/match" element={<Match/>}></Route>
         <Route path="/payments" element={<Payments/>}></Route>
         <Route path="/transactions" element={<Transaction/>}></Route>
+        <Route path="/DoneLogin/:id" element={<DoneLogin/>}></Route>
       </Routes>
     </BrowserRouter>
   )

@@ -54,7 +54,10 @@ const Landing = () => {
           <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center">
             <span className="text-white font-bold text-lg">$</span>
           </div>
-          <span className="text-2xl font-bold text-gray-800">FingerPay</span>
+          <span className="text-2xl font-bold">
+            <span className="text-orange-500">FIN</span>
+            <span className="text-gray-800">TOUCH</span>
+          </span>
         </div>
         <div className="hidden md:flex space-x-8">
           <a href="#features" className="text-gray-600 hover:text-orange-500 transition-colors">Features</a>
@@ -63,6 +66,7 @@ const Landing = () => {
           <a href="/login" className="text-gray-600 hover:text-orange-500 transition-colors">Login</a>
         </div>
         <motion.button 
+          onClick={() => nav("/payments")}
           className="bg-orange-500 text-white px-6 py-2 rounded-full hover:bg-orange-600 transition-colors"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -172,7 +176,7 @@ const Landing = () => {
           viewport={{ once: true }}
         >
           <motion.div className="text-center mb-16" variants={fadeInUp}>
-            <h2 className="text-4xl font-bold text-gray-800 mb-4">Why Choose FingerPay?</h2>
+            <h2 className="text-4xl font-bold text-gray-800 mb-4">Why Choose FINTOUCH ?</h2>
             <p className="text-xl text-gray-600">Experience the future of payments with cutting-edge security and speed</p>
           </motion.div>
 
@@ -211,7 +215,7 @@ const Landing = () => {
             >
               <h2 className="text-4xl font-bold text-gray-800 mb-6">Your Security is Our Priority</h2>
               <p className="text-lg text-gray-600 mb-8">
-                FingerPay uses biometric technology combined with 2 layered encryption
+                Fintouch uses biometric technology combined with 2 layered encryption
                 to ensure your transactions are always protected.
               </p>
               <div className="space-y-4">
@@ -290,7 +294,7 @@ const Landing = () => {
             Ready to Transform Your Payments?
           </h2>
           <p className="text-xl mb-8 opacity-90">
-            Join thousands of users already enjoying secure, instant payments with FingerPay
+            Join thousands of users already enjoying secure, instant payments with <span className="font-bold text-white">Fintouch</span>
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <motion.button 
@@ -320,7 +324,7 @@ const Landing = () => {
                 <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center">
                   <span className="text-white font-bold">$</span>
                 </div>
-                <span className="text-xl font-bold">FingerPay</span>
+                <span className="text-2xl font-bold text-white">FINTOUCH</span>
               </div>
               <p className="text-gray-400">
                 Secure payments with a touch. The future of digital transactions.
@@ -355,7 +359,7 @@ const Landing = () => {
             </div>
           </div>
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2025 FingerPay. All rights reserved.</p>
+            <p>&copy; 2025 Fintouch. All rights reserved.</p>
           </div>
         </div>
       </footer>

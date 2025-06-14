@@ -4,8 +4,8 @@ const TransactionSchema = mongoose.Schema({
 
     from : {required : true, type : String},
     to : {required : true, type : String},
-    amount : {required : true, type : Number}
-
+    amount : {required : true, type : Number},
+    date : {type : Date, default : Date.now}
 
 })
 

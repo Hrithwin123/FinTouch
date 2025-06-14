@@ -36,7 +36,7 @@ export default function VendorLogin(){
                             <span className="text-white text-2xl font-bold">F</span>
                         </div>
                         <h1 className="text-2xl font-bold text-gray-800 mb-2">Login to your Account</h1>
-                        <p className="text-gray-600 text-sm">Login to manage your finger pay store</p>
+                        <p className="text-gray-600 text-sm">Access FingerPay to make secure transactions</p>
                     </div>
     
                     {/* Form */}

@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react"
 import { ArrowLeft, ArrowRight, Plus } from "lucide-react"
+import { useNavigate } from "react-router-dom"
 
 export default function Transaction() {
     const [allTransactions, setAllTransactions] = useState([])
     const [loading, setLoading] = useState(true)
+
+    const nav = useNavigate()
 
     useEffect(() => {
         fetch("http://localhost:3000/getTransactions")
@@ -25,7 +28,6 @@ export default function Transaction() {
     }
 
     const getTransactionIcon = (from, to) => {
-        // You can customize this logic based on your transaction types
         return "💰"
     }
 
@@ -41,12 +43,13 @@ export default function Transaction() {
                             {transaction.from} → {transaction.to}
                         </div>
                         <div className="text-gray-500 text-sm">
-                            {new Date().toLocaleDateString('en-IN', { 
+                            {new Date(transaction.date).toLocaleDateString('en-IN', { 
                                 day: 'numeric', 
                                 month: 'short', 
                                 hour: '2-digit', 
                                 minute: '2-digit' 
-                            })}
+                            })} 
+   
                         </div>
                     </div>
                 </div>
@@ -69,7 +72,7 @@ export default function Transaction() {
                 <div className="max-w-4xl mx-auto px-6 py-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4">
-                            <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                            <button onClick={() => nav("/payments")} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
                                 <ArrowLeft className="w-6 h-6 text-gray-600" />
                             </button>
                             <div>
@@ -78,7 +81,7 @@ export default function Transaction() {
                             </div>
                         </div>
                         <button 
-                            onClick={() => window.location.href = '/payments'}
+                            onClick={() => nav("/payments")}
                             className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-full font-semibold hover:from-orange-600 hover:to-red-600 transition-all duration-200 flex items-center space-x-2 shadow-lg"
                         >
                             <Plus className="w-5 h-5" />
@@ -94,7 +97,7 @@ export default function Transaction() {
                     <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center">
                         <span className="text-white font-bold text-lg">$</span>
                     </div>
-                    <span className="text-2xl font-bold text-gray-800">FingerPay</span>
+                    <span className="text-2xl font-bold text-orange-500">FIN<span className="text-gray-800">TOUCH</span></span>
                 </div>
 
                 {/* Stats Cards */}

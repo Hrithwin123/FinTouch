@@ -8,7 +8,7 @@ import { CreditCard, Receipt, UserPlus, LogIn } from "lucide-react";
 const socket = io("http://localhost:3000")
 
 export default function Payments() {
-  const [shopBalance, setShopBalance] = useState(0);
+  const [paymentBeingDone, setPaymentBeingDone] = useState(false);
   const [allUsers, setAllUsers] = useState([]);
   const [allVendors, setAllVendors] = useState([]);
   const [money, setMoney] = useState("0");
@@ -112,6 +112,7 @@ export default function Payments() {
   }
 
   async function handlePayment() {
+    setPaymentBeingDone(true)
     const scanResponse = await fetch("http://localhost:3000/scanFinger");
     const scanResult = await scanResponse.json();
     const template = scanResult.TemplateBase64;
@@ -168,6 +169,8 @@ export default function Payments() {
         })
         .catch((err) => console.log(err));
     }
+
+    setPaymentBeingDone(false)
   }
 
   const displayUsers = allUsers.map((user, index) => (
@@ -252,7 +255,8 @@ export default function Payments() {
           <div className="flex justify-between items-center h-16">
             {/* Logo/Title */}
             <motion.div 
-              className="flex items-center space-x-3"
+            onClick={() => nav("/")}
+              className="flex items-center space-x-3 cursor-pointer"
               whileHover={{ scale: 1.02 }}
             >
               <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center shadow-lg">
@@ -261,7 +265,7 @@ export default function Payments() {
                 </svg>
               </div>
               <div>
-                <h1 className="text-xl font-bold text-gray-800">FingerPay</h1>
+                <h1 className="text-xl font-bold text-orange-500">FIN<span className="text-gray-800">TOUCH</span></h1>
                 <p className="text-xs text-gray-500">Biometric Payments</p>
               </div>
             </motion.div>
@@ -428,6 +432,7 @@ export default function Payments() {
 
                 <motion.button
                   onClick={handlePayment}
+                  disabled={paymentBeingDone}
                   className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl text-base"
                   variants={itemVariants}
                   whileHover={{ scale: 1.05, boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1)" }}
