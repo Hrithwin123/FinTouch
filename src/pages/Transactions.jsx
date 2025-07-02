@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { ArrowLeft, ArrowRight, Plus } from "lucide-react"
 import { useNavigate } from "react-router-dom"
+import {motion} from "framer-motion"
 
 export default function Transaction() {
     const [allTransactions, setAllTransactions] = useState([])
@@ -30,10 +31,11 @@ export default function Transaction() {
     const getTransactionIcon = (from, to) => {
         return "💰"
     }
-
+    let delay = 0;
     const showTransactions = reverseTransactions.map((transaction, index) => (
-        <div key={index} className="bg-white rounded-2xl p-6 mb-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
+        <motion.div initial={{y : -30, opacity : 0}} animate={{y : 0, opacity : 1}} transition={{duration : 0.5, delay : delay+=0.2}}  key={index} className="bg-white rounded-2xl p-6 mb-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow duration-200">
             <div className="flex items-center justify-between">
+
                 <div className="flex items-center space-x-4">
                     <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
                         {getTransactionIcon(transaction.from, transaction.to)}
@@ -62,7 +64,7 @@ export default function Transaction() {
                     </div>
                 </div>
             </div>
-        </div>
+        </motion.div>
     ))
 
     return (

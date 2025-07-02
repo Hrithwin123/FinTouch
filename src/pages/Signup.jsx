@@ -121,7 +121,7 @@ export default function Signup(){
                         <div className="bg-gradient-to-r from-orange-500 to-red-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
                             <span className="text-white text-2xl font-bold">F</span>
                         </div>
-                        <h1 className="text-xl font-bold text-gray-800">FingerPay</h1>
+                        <h1 className="text-xl font-bold text-gray-800">FINTOUCH</h1>
                         <p className="text-xs text-gray-500">Biometric Payments</p>
                     </div>
 

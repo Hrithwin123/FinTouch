@@ -102,7 +102,7 @@ export default function Login(){
                             <span className="text-white text-2xl font-bold">F</span>
                         </div>
                         <div>
-                            <h1 className="text-xl font-bold text-gray-800">FingerPay</h1>
+                            <h1 className="text-xl font-bold text-gray-800">FINTOUCH</h1>
                             <p className="text-xs text-gray-500">Biometric Payments</p>
                         </div>
                     </div>
