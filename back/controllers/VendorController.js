@@ -1,7 +1,7 @@
 import Vendor from "../models/VendorSchema.js"
 import User from "../models/UserSchema.js";
 import Transaction from "../models/TransactionSchema.js";
-
+import { createSolanaTransaction } from "../blockchain/transaction.js";
 
 export const getVendors = async(req, res) => {
 
@@ -30,15 +30,19 @@ export const sendMoneyToVendor = async(req, res) => {
     await creditVendor.save()
 
     const foundSender = await User.findById(sender)
+    
+    res.json({success : true, message : `Successfully recieved Rs. ${money} to ${creditVendor.name}`, id})
+
+    const signature = await createSolanaTransaction(money, foundSender.name, creditVendor.name)
 
     const transaction = new Transaction({
         from : foundSender.name,
         to : creditVendor.name,
-        amount : money
+        amount : money,
+        signature : signature
     })
 
     await transaction.save()
 
-    return res.json({success : true, message : `Successfully recieved Rs. ${money} to ${creditVendor.name}`, id})
     
 }

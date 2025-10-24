@@ -48,7 +48,7 @@ export const removeMoney = async(req, res) => {
     
     if((debitUser.balance - Number(money)) < 0){
 
-        return res.json({success : true, message : "Not enough money in you account", id : null, noBalance : true})
+        return res.json({success : true, message : "Not enough money in your account", id : null, noBalance : true})
         
     }
     
@@ -56,8 +56,7 @@ export const removeMoney = async(req, res) => {
     
     await debitUser.save()
 
-    
-    
+
     return res.json({success : true, noBalance : false, message : `Successfully removed Rs. ${money} from ${debitUser.name}`, id : debitUser._id})
 
 

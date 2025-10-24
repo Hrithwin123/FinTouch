@@ -107,6 +107,11 @@ export default function DoneLogin() {
         }
     }
 
+    async function submitCard() {
+
+    }
+
+
     const displayImage = image === "" ? null : (
         <div className="relative">
             <img 

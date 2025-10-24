@@ -1,0 +1,29 @@
+process.argv = [process.argv[0], ...process.argv.slice(3)];
+
+		import __esrun_url from 'url';
+
+		import { createRequire as __esrun_createRequire } from "module";
+
+		const __esrun_fileUrl = __esrun_url.pathToFileURL("D:\Hrithwin\fin\back\blockchain\esrun-1761149922206.tmp.mjs");
+
+		const require = __esrun_createRequire(__esrun_fileUrl);
+// airdrop.ts
+import { Connection, Keypair, clusterApiUrl, LAMPORTS_PER_SOL } from "../node_modules/@solana/web3.js/lib/index.cjs.js";
+import fs from "fs";
+var keypair = Keypair.generate();
+fs.writeFileSync("new_admin.json", JSON.stringify(Array.from(keypair.secretKey)));
+console.log("Generated keypair:", keypair.publicKey.toBase58());
+var connection = new Connection(clusterApiUrl("devnet"), "confirmed");
+(async () => {
+  const airdropSignature = await connection.requestAirdrop(
+    keypair.publicKey,
+    2 * LAMPORTS_PER_SOL
+    // 2 SOL
+  );
+  await connection.confirmTransaction(airdropSignature);
+  const balance = await connection.getBalance(keypair.publicKey);
+  console.log("New balance:", balance / LAMPORTS_PER_SOL, "SOL");
+})();
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsiYWlyZHJvcC50cyJdLAogICJzb3VyY2VSb290IjogIkQ6XFxIcml0aHdpblxcZmluXFxiYWNrXFxibG9ja2NoYWluIiwKICAic291cmNlc0NvbnRlbnQiOiBbImltcG9ydCB7Q29ubmVjdGlvbiwgS2V5cGFpciwgY2x1c3RlckFwaVVybCwgTEFNUE9SVFNfUEVSX1NPTH0gZnJvbSBcIkBzb2xhbmEvd2ViMy5qc1wiO1xyXG5pbXBvcnQgZnMgZnJvbSBcImZzXCI7XHJcblxyXG4vLyAxLiBHZW5lcmF0ZSBhIG5ldyBrZXlwYWlyXHJcbmNvbnN0IGtleXBhaXIgPSBLZXlwYWlyLmdlbmVyYXRlKCk7XHJcblxyXG4vLyBTYXZlIGl0IGxvY2FsbHlcclxuZnMud3JpdGVGaWxlU3luYyhcIm5ld19hZG1pbi5qc29uXCIsIEpTT04uc3RyaW5naWZ5KEFycmF5LmZyb20oa2V5cGFpci5zZWNyZXRLZXkpKSk7XHJcblxyXG5jb25zb2xlLmxvZyhcIkdlbmVyYXRlZCBrZXlwYWlyOlwiLCBrZXlwYWlyLnB1YmxpY0tleS50b0Jhc2U1OCgpKTtcclxuXHJcbi8vIDIuIENvbm5lY3QgdG8gZGV2bmV0XHJcbmNvbnN0IGNvbm5lY3Rpb24gPSBuZXcgQ29ubmVjdGlvbihjbHVzdGVyQXBpVXJsKFwiZGV2bmV0XCIpLCBcImNvbmZpcm1lZFwiKTtcclxuXHJcbi8vIDMuIFJlcXVlc3QgYWlyZHJvcFxyXG4oYXN5bmMgKCkgPT4ge1xyXG4gICAgY29uc3QgYWlyZHJvcFNpZ25hdHVyZSA9IGF3YWl0IGNvbm5lY3Rpb24ucmVxdWVzdEFpcmRyb3AoXHJcbiAgICAgICAga2V5cGFpci5wdWJsaWNLZXksXHJcbiAgICAgICAgMiAqIExBTVBPUlRTX1BFUl9TT0wgLy8gMiBTT0xcclxuICAgICk7XHJcblxyXG4gICAgLy8gV2FpdCBmb3IgY29uZmlybWF0aW9uXHJcbiAgICBhd2FpdCBjb25uZWN0aW9uLmNvbmZpcm1UcmFuc2FjdGlvbihhaXJkcm9wU2lnbmF0dXJlKTtcclxuXHJcbiAgICBjb25zdCBiYWxhbmNlID0gYXdhaXQgY29ubmVjdGlvbi5nZXRCYWxhbmNlKGtleXBhaXIucHVibGljS2V5KTtcclxuICAgIGNvbnNvbGUubG9nKFwiTmV3IGJhbGFuY2U6XCIsIGJhbGFuY2UgLyBMQU1QT1JUU19QRVJfU09MLCBcIlNPTFwiKTtcclxufSkoKTtcclxuIl0sCiAgIm1hcHBpbmdzIjogIjtBQUFBLFNBQVEsWUFBWSxTQUFTLGVBQWUsd0JBQXVCO0FBQ25FLE9BQU8sUUFBUTtBQUdmLElBQU0sVUFBVSxRQUFRLFNBQVM7QUFHakMsR0FBRyxjQUFjLGtCQUFrQixLQUFLLFVBQVUsTUFBTSxLQUFLLFFBQVEsU0FBUyxDQUFDLENBQUM7QUFFaEYsUUFBUSxJQUFJLHNCQUFzQixRQUFRLFVBQVUsU0FBUyxDQUFDO0FBRzlELElBQU0sYUFBYSxJQUFJLFdBQVcsY0FBYyxRQUFRLEdBQUcsV0FBVztBQUFBLENBR3JFLFlBQVk7QUFDVCxRQUFNLG1CQUFtQixNQUFNLFdBQVc7QUFBQSxJQUN0QyxRQUFRO0FBQUEsSUFDUixJQUFJO0FBQUE7QUFBQSxFQUNSO0FBR0EsUUFBTSxXQUFXLG1CQUFtQixnQkFBZ0I7QUFFcEQsUUFBTSxVQUFVLE1BQU0sV0FBVyxXQUFXLFFBQVEsU0FBUztBQUM3RCxVQUFRLElBQUksZ0JBQWdCLFVBQVUsa0JBQWtCLEtBQUs7QUFDakUsR0FBRzsiLAogICJuYW1lcyI6IFtdCn0K
+
+	
